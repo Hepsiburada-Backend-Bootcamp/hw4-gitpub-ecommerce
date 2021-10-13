@@ -16,10 +16,13 @@ namespace Infrastructure
   {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-      services.AddDbContext<ECommerceDbContext>(options => 
+      services.AddDbContext<ECommerceDbContext>(options =>
       options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
       services.AddScoped<IUserRepository, UserRepository>();
       services.AddScoped<IProductRepository, ProductRepository>();
+      services.AddScoped<IOrderRepository, OrderRepository>();
+      services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+
       //services.AddScoped<IRepository, Repository>();
 
 
