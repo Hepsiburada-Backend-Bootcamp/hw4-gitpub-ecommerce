@@ -25,7 +25,7 @@ namespace Infrastructure.Repository
 
     public new List<User> GetAll()
     {
-      return _dbContext.Users.Include(user => user.Orders).ToList();
+      return _dbContext.Users.ToList();
     }
 
     public List<User> GetAllDapper()
@@ -83,5 +83,5 @@ namespace Infrastructure.Repository
 
 
 
-    }
+  }
 }

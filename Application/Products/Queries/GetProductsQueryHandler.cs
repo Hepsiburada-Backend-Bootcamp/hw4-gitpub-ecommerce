@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using AutoMapper;
+using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
 using System;
@@ -10,18 +11,23 @@ using System.Threading.Tasks;
 
 namespace Application.Products.Queries
 {
-    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<Product>>
+  public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<GetProductsResponse>>
+  {
+    private readonly IProductRepository _productRepository;
+    private readonly IMapper _mapper;
+
+
+    public GetProductsQueryHandler(IProductRepository productRepository, IMapper mapper)
     {
-        private readonly IProductRepository _productRepository;
-
-        public GetProductsQueryHandler(IProductRepository productRepository)
-        {
-            _productRepository = productRepository;
-        }
-
-        public Task<List<Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(_productRepository.GetProductsDapper());
-        }
+      _productRepository = productRepository;
+      _mapper = mapper;
     }
+
+    public Task<List<GetProductsResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    {
+      var products = _productRepository.GetProductsDapper();
+      var result = _mapper.Map<List<GetProductsResponse>>(products);
+      return Task.FromResult(result);
+    }
+  }
 }

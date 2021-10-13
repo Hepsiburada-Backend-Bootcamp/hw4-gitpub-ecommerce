@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using AutoMapper;
+using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
 using System;
@@ -10,18 +11,22 @@ using System.Threading.Tasks;
 
 namespace Application.Users.Queries.GetUsers
 {
-  public class GetUserQueryHandler : IRequestHandler<GetUsersQuery, List<User>>
+  public class GetUserQueryHandler : IRequestHandler<GetUsersQuery, List<GetUsersResponse>>
   {
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-    public GetUserQueryHandler(IUserRepository userRepository)
+    public GetUserQueryHandler(IUserRepository userRepository, IMapper mapper)
     {
       _userRepository = userRepository;
+      _mapper = mapper;
     }
 
-    public Task<List<User>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+    public Task<List<GetUsersResponse>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
-      return Task.FromResult(_userRepository.GetAll());
+      var users = _userRepository.GetAll();
+      var result = _mapper.Map<List<GetUsersResponse>>(users);
+      return Task.FromResult(result);
     }
   }
 }

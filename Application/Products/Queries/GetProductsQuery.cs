@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Products.Queries
 {
-    public class GetProductsQuery: IRequest<List<Product>>
+    public class GetProductsQuery: IRequest<List<GetProductsResponse>>
     {
     }
 }
