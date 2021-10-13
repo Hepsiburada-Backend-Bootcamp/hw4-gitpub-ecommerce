@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-  public interface IRepository<TEntity> where TEntity : class
-  {
-    void Add(TEntity entity);
-  }
+    public interface IRepository<Tentity> where Tentity : class
+    {
+        void Create(Tentity entity);
+        void Remove(Tentity entity);
+        void Update(Tentity entity);
+        List<Tentity> GetAll();
+    }
 }

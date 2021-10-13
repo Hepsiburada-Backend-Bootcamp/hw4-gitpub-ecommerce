@@ -10,18 +10,35 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-  public abstract class Repository<TEntity> : BaseRepository, IRepository<TEntity> where TEntity : class
-  {
-    private readonly ECommerceDbContext _dbContext;
-    private DbSet<TEntity> _dbSet;
+    public class Repository<Tentity> : BaseRepository, IRepository<Tentity> where Tentity : class
+    {
+        private readonly ECommerceDbContext _dbContext;
+        DbSet<Tentity> _dbSet;
+        public Repository(ECommerceDbContext dbContext, IConfiguration configuration) : base(configuration)
+        {
+            _dbContext = dbContext;
+            _dbSet = _dbContext.Set<Tentity>();
+        }
 
-    public Repository(ECommerceDbContext dbContext, IConfiguration configuration) : base(configuration)
-    {
-      _dbContext = dbContext;
-      _dbSet = _dbContext.Set<TEntity>();
+        public void Create(Tentity entity)
+        {
+            _dbSet.Add(entity);
+            _dbContext.SaveChanges() ;
+        }
+
+        public List<Tentity> GetAll()
+        {
+            return _dbSet.Where(x => true).ToList();
+        }
+
+        public void Remove(Tentity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Tentity entity)
+        {
+            throw new NotImplementedException();
+        }
     }
-    public void Add(TEntity entity)
-    {
-    }
-  }
 }

@@ -19,9 +19,8 @@ namespace Infrastructure
       services.AddDbContext<ECommerceDbContext>(options => 
       options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
       services.AddScoped<IUserRepository, UserRepository>();
-      //services.AddScoped<IRepository, Repository>();
-      services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
       services.AddScoped<IProductRepository, ProductRepository>();
+      //services.AddScoped<IRepository, Repository>();
 
 
 

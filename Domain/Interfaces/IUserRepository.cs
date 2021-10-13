@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-  public interface IUserRepository
+  public interface IUserRepository : IRepository<User>
   {
-    List<User> GetAll();
-    void Create(User user);
     void CreateDapper(User user);
     List<User> GetAllDapper();
   }

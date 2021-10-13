@@ -21,7 +21,7 @@ namespace Application.Users.Queries.GetUsers
 
     public Task<List<User>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
-      return Task.FromResult(_userRepository.GetAllDapper());
+      return Task.FromResult(_userRepository.GetAll());
     }
   }
 }

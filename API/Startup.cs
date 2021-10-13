@@ -1,5 +1,4 @@
 using Application;
-using Application.Products.Commands.CreateProduct;
 using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -37,7 +36,6 @@ namespace API
 
       services.AddApplication();
       services.AddInfrastructure(Configuration);
-      services.AddScoped<IRequestHandler<CreateProductCommand>, CreateProductCommandHandler>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

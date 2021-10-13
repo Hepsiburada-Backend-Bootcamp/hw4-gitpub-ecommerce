@@ -12,18 +12,18 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-  public class UserRepository : BaseRepository, IUserRepository
+  public class UserRepository : Repository<User>, IUserRepository
   {
     private readonly ECommerceDbContext _dbContext;
     private readonly IConfiguration _configuration;
 
-    public UserRepository(ECommerceDbContext dbContext, IConfiguration configuration) : base(configuration)
+    public UserRepository(ECommerceDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
     {
       _dbContext = dbContext;
       _configuration = configuration;
     }
 
-    public List<User> GetAll()
+    public new List<User> GetAll()
     {
       return _dbContext.Users.Include(user => user.Orders).ToList();
     }
@@ -51,11 +51,6 @@ namespace Infrastructure.Repository
       }
     }
 
-    public void Create(User user)
-    {
-      _dbContext.Users.Add(user);
-      _dbContext.SaveChanges();
-    }
 
     public void CreateDapper(User user)
     {
@@ -86,5 +81,7 @@ namespace Infrastructure.Repository
       }
     }
 
-  }
+
+
+    }
 }
