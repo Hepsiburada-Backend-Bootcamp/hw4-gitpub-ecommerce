@@ -1,5 +1,7 @@
-﻿using Application.Products.Commands.CreateProduct;
-using Application.Products.Queries;
+﻿using Application.Requests.Products;
+using AutoMapper;
+using Domain.Commands.Products;
+using Domain.Queries.Products;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,17 +16,20 @@ namespace API.Controllers
     [ApiController]
     public class ProductController : ApiControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateProductCommand product)
+        public ProductController(IMapper mapper) : base(mapper)
         {
-            return Ok(await Mediator.Send(product));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody]CreateProductRequest request)
+        {
+            return Ok(await Mediator.Send(_mapper.Map<CreateProductCommand>(request)));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            GetProductsQuery query = new();
-            return Ok(await Mediator.Send(query));
+            return Ok(await Mediator.Send(new GetProductsQuery()));
         }
     }
 }

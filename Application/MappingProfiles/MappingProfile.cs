@@ -1,7 +1,13 @@
-﻿using Application.Products.Queries;
-using Application.Users.Queries.GetUsers;
+﻿using Application.Requests.Orders;
+using Application.Requests.Products;
+using Application.Requests.Users;
 using AutoMapper;
-using Domain.Entities;
+using Core.Entities;
+using Domain.Commands.Orders;
+using Domain.Commands.Products;
+using Domain.Commands.Users;
+using Domain.Dtos.Products;
+using Domain.Dtos.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +16,25 @@ using System.Threading.Tasks;
 
 namespace Application.MappingProfiles
 {
-  public class MappingProfile : Profile
-  {
-    public MappingProfile()
+    public class MappingProfile : Profile
     {
-      CreateMap<User, GetUsersResponse>();
-      CreateMap<Product, GetProductsResponse>();
+        public MappingProfile()
+        {
+            #region DomainToResponse
+
+            CreateMap<User, UserDto>();
+            CreateMap<Product, ProductDto>();
+            
+            #endregion
+
+            #region RequestToDomain
+
+            CreateMap<CreateOrderRequest, CreateOrderCommand>();
+            CreateMap<CreateProductRequest, CreateProductCommand>();
+            CreateMap<CreateUserRequest, CreateUserCommand>();
+
+            #endregion
+
+        }
     }
-  }
 }

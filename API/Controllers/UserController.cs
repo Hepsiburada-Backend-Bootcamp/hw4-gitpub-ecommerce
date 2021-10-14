@@ -1,6 +1,8 @@
-﻿using Application.Users.Commands.CreateUser;
-using Application.Users.Queries.GetUsers;
-using Domain.Entities;
+﻿using Application.Requests.Users;
+using AutoMapper;
+using Domain.Commands.Users;
+using Domain.Dtos.Users;
+using Domain.Queries.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,22 +12,24 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class UserController : ApiControllerBase
-  {
-
-    [HttpGet]
-    public async Task<ActionResult<List<User>>> GetAll()
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ApiControllerBase
     {
-      GetUsersQuery query = new();
-      return Ok(await Mediator.Send(query));
-    }
+        public UserController(IMapper mapper) : base(mapper)
+        {
+        }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
-    {
-      return Ok(await Mediator.Send(command));
+        [HttpGet]
+        public async Task<ActionResult<List<UserDto>>> GetAll()
+        {
+            return Ok(await Mediator.Send(new GetUsersQuery()));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
+        {
+            return Ok(await Mediator.Send(_mapper.Map<CreateUserCommand>(request)));
+        }
     }
-  }
 }

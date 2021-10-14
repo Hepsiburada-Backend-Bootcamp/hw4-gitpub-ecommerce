@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace Application
 {
-  public static class ApplicationDependencyInjection
-  {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static class ApplicationDependencyInjection
     {
-      //services.AddAutoMapper(Assembly.GetExecutingAssembly());
-      //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-      services.AddAutoMapper(Assembly.GetExecutingAssembly());
-      services.AddMediatR(Assembly.GetExecutingAssembly());
-      //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-      return services;
+        public static IServiceCollection AddApplication(this IServiceCollection services)
+        {
+            //services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            return services;
+        }
     }
-  }
 }
