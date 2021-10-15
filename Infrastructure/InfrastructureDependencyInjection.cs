@@ -23,7 +23,7 @@ namespace Infrastructure
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
-
+            services.AddScoped<IOrderDetailsMongoRepository, OrderDetailsMongoRepository>();
             //services.AddScoped<IRepository, Repository>();
 
 

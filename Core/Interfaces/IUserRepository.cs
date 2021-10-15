@@ -11,5 +11,6 @@ namespace Core.Interfaces
     {
         void CreateDapper(User user);
         List<User> GetAllDapper();
+        User GetById(Guid userId);
     }
 }

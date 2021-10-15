@@ -28,6 +28,11 @@ namespace Infrastructure.Repository
             return _dbContext.Users.ToList();
         }
 
+        public User GetById(Guid userId)
+        {
+            return _dbContext.Users.FirstOrDefault(x => x.Id == userId);
+        }
+
         public List<User> GetAllDapper()
         {
             try
