@@ -8,6 +8,10 @@ namespace Core.Entities
 {
     public class Product : BaseEntity
     {
+        public Product()
+        {
+        }
+
         public Product(string name, int price, string description)
         {
             Name = name;

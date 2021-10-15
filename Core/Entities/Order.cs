@@ -9,6 +9,10 @@ namespace Core.Entities
 {
     public class Order : BaseEntity
     {
+        public Order()
+        {
+        }
+
         public Order(Guid userId)
         {
             UserId = userId;

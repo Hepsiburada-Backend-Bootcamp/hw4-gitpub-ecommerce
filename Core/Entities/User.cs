@@ -10,6 +10,10 @@ namespace Core.Entities
 {
     public class User : BaseEntity
     {
+        public User()
+        {
+        }
+
         public User(string name, string lastName, string email)
         {
             Name = name;

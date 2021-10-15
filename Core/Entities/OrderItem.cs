@@ -9,6 +9,10 @@ namespace Core.Entities
 {
     public class OrderItem : BaseEntity
     {
+        public OrderItem()
+        {
+        }
+
         public OrderItem(Guid productId, Guid orderId, int price, int quantity)
         {
             ProductId = productId;
