@@ -32,8 +32,8 @@ namespace Domain.Commands.Orders
             Order order = new Order(request.UserId);
 
             OrderDetail orderDetail = new OrderDetail();
-            MongoOrderItem mongoOrderItem = new MongoOrderItem();
-            MongoProduct mongoProduct = new MongoProduct();
+            MongoOrderItem mongoOrderItem;
+            MongoProduct mongoProduct; 
             List<MongoOrderItem> mongoOrderItemList = new List<MongoOrderItem>();
 
 
@@ -42,22 +42,22 @@ namespace Domain.Commands.Orders
 
             foreach (var item in request.OrderItems)
             {
+                mongoProduct = new MongoProduct();
+                mongoOrderItem = new MongoOrderItem();
                 var dbProduct = _productRepository.GetById(item.ProductId);
                 OrderItem orderItem = new OrderItem(item.ProductId, order.Id, dbProduct.Price, item.Quantity);
                 mongoProduct.Name = dbProduct.Name;
                 mongoProduct.Price = dbProduct.Price;
                 mongoOrderItem.Product = mongoProduct;
                 mongoOrderItem.Quantity = item.Quantity;
-                mongoOrderItem.TotalPrice = mongoOrderItem.TotalPrice + item.Quantity * dbProduct.Price;
                 totalPrice = totalPrice + mongoOrderItem.TotalPrice;
                 mongoOrderItemList.Add(mongoOrderItem);
 
                 _orderItemRepository.CreateDapper(orderItem);
             }
-            orderDetail.TotalPrice = totalPrice;
             orderDetail.User = _userRepository.GetById(request.UserId);
             orderDetail.OrderItems = mongoOrderItemList;
-            orderDetail.OrderId = order.Id;
+            orderDetail.OrderId = order.Id.ToString();
             orderDetail.OrderDate = DateTime.Now;
             _orderdetailsRepository.AddOrderDetail(orderDetail);
 

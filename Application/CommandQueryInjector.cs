@@ -1,8 +1,10 @@
 ﻿using Domain.Commands.Orders;
 using Domain.Commands.Products;
 using Domain.Commands.Users;
+using Domain.Dtos.OderDetails;
 using Domain.Dtos.Products;
 using Domain.Dtos.Users;
+using Domain.Queries.OrderDetails;
 using Domain.Queries.Products;
 using Domain.Queries.Users;
 using MediatR;
@@ -31,6 +33,7 @@ namespace Application
 
             services.AddScoped<IRequestHandler<GetProductsQuery, List<ProductDto>>, ProductQueryHandler>();
             services.AddScoped<IRequestHandler<GetUsersQuery, List<UserDto>>, UserQueryHandler>();
+            services.AddScoped<IRequestHandler<GetOrderByIdQuery, OrderDetailsDto> , OrderDetailsQueryHandler>();
 
             #endregion
         }

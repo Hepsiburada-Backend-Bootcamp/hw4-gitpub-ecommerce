@@ -9,7 +9,9 @@ namespace Application.Requests.Orders
 {
     public class CreateOrderRequest
     {
+
         public Guid UserId { get; set; }
         public List<OrderItemDto> OrderItems { get; set; }
     }
+    
 }

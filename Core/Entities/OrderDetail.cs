@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
+    [BsonIgnoreExtraElements]
     public class OrderDetail
     {
-        [BsonElement("Id")]
-        public Guid OrderId { get; set; }
+       // [BsonElement("OrderId")]
+        public string OrderId { get; set; }
+
+        [BsonId]
+        public ObjectId _id { get; set; }
 
         [BsonElement("OrderItems")]
         public List<MongoOrderItem> OrderItems;
         [BsonElement("TotalPrice")]
-        public int TotalPrice { get; set; }
+        public int TotalPrice => OrderItems.Sum(x => x.TotalPrice );
         [BsonElement("User")]
         public User User { get; set; }
         [BsonElement("OrderDate")]
@@ -35,7 +40,7 @@ namespace Core.Entities
         [BsonElement("Quantity")]
         public int Quantity { get; set; }
         [BsonElement("TotalPrice")]
-        public int TotalPrice { get; set; }
+        public int TotalPrice => Product.Price * Quantity ;
 
     }
 }

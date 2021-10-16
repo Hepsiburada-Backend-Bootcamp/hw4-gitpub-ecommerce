@@ -31,9 +31,11 @@ namespace Infrastructure.Repository
             return _dbContext.GetCollection<OrderDetail>(_orderDetailCollection).Find(x => x.User.Id == userId).ToList();
         }
 
-        public OrderDetail GetOrderDetailByOrderId(Guid orderId)
+        public OrderDetail GetOrderDetailByOrderId(string orderId)
         {
-            return _dbContext.GetCollection<OrderDetail>(_orderDetailCollection).Find(x => x.OrderId == orderId).SingleOrDefault();
+            var detail = _dbContext.GetCollection<OrderDetail>(_orderDetailCollection).Find(_ => true).ToList();
+            var order = _dbContext.GetCollection<OrderDetail>(_orderDetailCollection).Find(x => x.OrderId == orderId).SingleOrDefault();
+            return order;
         }
 
         public void AddOrderDetail(OrderDetail order)

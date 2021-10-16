@@ -11,7 +11,7 @@ namespace Core.Interfaces
     {
         List<OrderDetail> GetAllOrderDetails();
         public List<OrderDetail> GetOrderDetailByUserId(Guid userId);
-        public OrderDetail GetOrderDetailByOrderId(Guid orderId);
+        public OrderDetail GetOrderDetailByOrderId(string orderId);
         void AddOrderDetail(OrderDetail order);
     }
 }

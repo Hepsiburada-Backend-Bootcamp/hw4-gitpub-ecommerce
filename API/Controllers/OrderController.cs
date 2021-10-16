@@ -1,6 +1,7 @@
 ﻿using Application.Requests.Orders;
 using AutoMapper;
 using Domain.Commands.Orders;
+using Domain.Queries.OrderDetails;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,6 +23,14 @@ namespace API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateOrderRequest request)
         {
             return Ok(await Mediator.Send(_mapper.Map<CreateOrderCommand>(request)));
+        }
+        [HttpGet("{OrderId}")]
+        public async Task<IActionResult> Get(string OrderId)
+        {
+            GetOrderByIdRequest request = new GetOrderByIdRequest();
+            request.OrderId = OrderId;
+            var result = await Mediator.Send(_mapper.Map<GetOrderByIdQuery>(request));
+            return Ok(result);
         }
     }
 }
