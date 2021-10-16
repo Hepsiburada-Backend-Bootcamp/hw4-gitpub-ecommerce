@@ -25,7 +25,11 @@ namespace Application.MappingProfiles
             #region DomainToResponse
 
             CreateMap<User, UserDto>();
+            CreateMap<UserDetail,UserDto>();
             CreateMap<Product, ProductDto>();
+            CreateMap<User, UserDetail>()
+                .ForMember(dest => dest.Id, opt =>
+                    opt.MapFrom(src => src.Id.ToString()));
             CreateMap<OrderDetail, OrderDetailsDto>();
 
             #endregion
@@ -34,11 +38,17 @@ namespace Application.MappingProfiles
 
             CreateMap<CreateOrderRequest, CreateOrderCommand>();
             CreateMap<CreateProductRequest, CreateProductCommand>();
+            CreateMap<CreateProductRequest, CreateProductDapperCommand>();
             CreateMap<CreateUserRequest, CreateUserCommand>();
             CreateMap<GetOrderByIdRequest, GetOrderByIdQuery>();
 
+            CreateMap<CreateUserRequest, CreateUserDapperCommand>();
+
 
             #endregion
+
+
+
 
         }
     }

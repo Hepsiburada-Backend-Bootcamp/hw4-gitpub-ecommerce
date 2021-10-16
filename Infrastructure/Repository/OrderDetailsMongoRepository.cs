@@ -17,7 +17,7 @@ namespace Infrastructure.Repository
 
         public OrderDetailsMongoRepository()
         {
-            MongoClient _client = new MongoClient("mongodb://localhost:27017");
+            MongoClient _client = new MongoClient("mongodb+srv://ks:12345@ecommerce.7ziwm.mongodb.net/test?authSource=admin&replicaSet=atlas-9n6o2n-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true");
             _dbContext = _client.GetDatabase(_eCommerceDb);
         }
 
@@ -26,9 +26,9 @@ namespace Infrastructure.Repository
             return _dbContext.GetCollection<OrderDetail>(_orderDetailCollection).Find(_ => true).ToList();
         }
         
-        public List<OrderDetail> GetOrderDetailByUserId(Guid userId)
+        public List<OrderDetail> GetOrderDetailByUserId(string userId)
         {
-            return _dbContext.GetCollection<OrderDetail>(_orderDetailCollection).Find(x => x.User.Id == userId).ToList();
+            return _dbContext.GetCollection<OrderDetail>(_orderDetailCollection).Find(x => x.User.Id.Equals(userId)).ToList();
         }
 
         public OrderDetail GetOrderDetailByOrderId(string orderId)

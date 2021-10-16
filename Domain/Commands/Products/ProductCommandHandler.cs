@@ -11,6 +11,7 @@ using MediatR;
 namespace Domain.Commands.Products
 {
     public class ProductCommandHandler : IRequestHandler<CreateProductCommand>
+                                            ,IRequestHandler<CreateProductDapperCommand>
     {
         private readonly IProductRepository _productRepository;
 
@@ -20,6 +21,16 @@ namespace Domain.Commands.Products
         }
 
         public Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        {
+            Product product = new Product(request.Name, request.Price, request.Description);
+
+            _productRepository.Create(product);
+
+            return Unit.Task;
+        }
+
+
+        public Task<Unit> Handle(CreateProductDapperCommand request, CancellationToken cancellationToken)
         {
             Product product = new Product(request.Name, request.Price, request.Description);
 

@@ -20,8 +20,7 @@ namespace Infrastructure.Repository
 
     protected IDbConnection CreateConnection()
     {
-      string connectionStr = _configuration.GetConnectionString("DefaultConnection");
-      return new NpgsqlConnection(connectionStr);
+      return new NpgsqlConnection("UserID=postgres;Password=12345;Server=localhost;Port=5432;Database=ECommerce;Integrated Security=true;Pooling=true;");
     }
   }
 }

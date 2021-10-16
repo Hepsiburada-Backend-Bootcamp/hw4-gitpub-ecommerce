@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Requests.Orders;
+using Domain.Queries.OrderDetails;
 
 namespace API.Controllers
 {
@@ -30,6 +32,12 @@ namespace API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
         {
             return Ok(await Mediator.Send(_mapper.Map<CreateUserCommand>(request)));
+        }
+
+        [HttpPost("CreateUserDapper")]
+        public async Task<IActionResult> CreateDapper([FromBody] CreateUserRequest request)
+        {
+            return Ok(await Mediator.Send(_mapper.Map<CreateUserDapperCommand>(request)));
         }
     }
 }

@@ -25,15 +25,20 @@ namespace Application
 
             services.AddScoped<IRequestHandler<CreateOrderCommand, MediatR.Unit>, OrderCommandHandler>();
             services.AddScoped<IRequestHandler<CreateProductCommand, MediatR.Unit>, ProductCommandHandler>();
+            services.AddScoped<IRequestHandler<CreateProductDapperCommand, MediatR.Unit>, ProductCommandHandler>();
             services.AddScoped<IRequestHandler<CreateUserCommand, MediatR.Unit>, UserCommandHandler>();
+            services.AddScoped<IRequestHandler<CreateUserDapperCommand, MediatR.Unit>, UserCommandHandler>();
+
 
             #endregion
 
             #region Queries
 
             services.AddScoped<IRequestHandler<GetProductsQuery, List<ProductDto>>, ProductQueryHandler>();
+            services.AddScoped<IRequestHandler<GetProductFromDapperQuery, List<ProductDto>>, ProductQueryHandler>();
             services.AddScoped<IRequestHandler<GetUsersQuery, List<UserDto>>, UserQueryHandler>();
             services.AddScoped<IRequestHandler<GetOrderByIdQuery, OrderDetailsDto> , OrderDetailsQueryHandler>();
+            services.AddScoped<IRequestHandler<GetOrderByUserIdQuery, List<OrderDetailsDto>> , OrderDetailsQueryHandler>();
 
             #endregion
         }

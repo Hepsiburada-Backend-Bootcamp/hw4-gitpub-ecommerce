@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace Domain.Commands.Orders
 {
@@ -17,14 +18,16 @@ namespace Domain.Commands.Orders
         private readonly IProductRepository _productRepository;
         private readonly IOrderDetailsMongoRepository _orderdetailsRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public OrderCommandHandler(IOrderItemRepository orderItemRepository, IOrderRepository orderRepository, IProductRepository productRepository, IOrderDetailsMongoRepository orderdetailRepository, IUserRepository userRepository)
+        public OrderCommandHandler(IMapper iMapper, IOrderItemRepository orderItemRepository, IOrderRepository orderRepository, IProductRepository productRepository, IOrderDetailsMongoRepository orderdetailRepository, IUserRepository userRepository)
         {
             _orderItemRepository = orderItemRepository;
             _orderRepository = orderRepository;
             _productRepository = productRepository;
             _orderdetailsRepository = orderdetailRepository;
             _userRepository = userRepository;
+            _mapper = iMapper;
         }
 
         public Task<Unit> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -55,7 +58,8 @@ namespace Domain.Commands.Orders
 
                 _orderItemRepository.CreateDapper(orderItem);
             }
-            orderDetail.User = _userRepository.GetById(request.UserId);
+
+            orderDetail.User = _mapper.Map<UserDetail>(_userRepository.GetById(request.UserId));
             orderDetail.OrderItems = mongoOrderItemList;
             orderDetail.OrderId = order.Id.ToString();
             orderDetail.OrderDate = DateTime.Now;

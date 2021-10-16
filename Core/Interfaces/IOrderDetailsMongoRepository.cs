@@ -10,7 +10,7 @@ namespace Core.Interfaces
     public interface IOrderDetailsMongoRepository
     {
         List<OrderDetail> GetAllOrderDetails();
-        public List<OrderDetail> GetOrderDetailByUserId(Guid userId);
+        public List<OrderDetail> GetOrderDetailByUserId(string userId);
         public OrderDetail GetOrderDetailByOrderId(string orderId);
         void AddOrderDetail(OrderDetail order);
     }

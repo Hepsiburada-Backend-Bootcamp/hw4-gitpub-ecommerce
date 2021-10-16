@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Queries.OrderDetails
 {
-    public class OrderDetailsQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderDetailsDto>
+    public class OrderDetailsQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderDetailsDto>,
+                                                IRequestHandler<GetOrderByUserIdQuery, List<OrderDetailsDto>>
     {
         private readonly IOrderDetailsMongoRepository _orderDetailsMongoRepository;
         private readonly IMapper _mapper;
@@ -28,5 +29,10 @@ namespace Domain.Queries.OrderDetails
         }
 
 
+        public Task<List<OrderDetailsDto>> Handle(GetOrderByUserIdQuery request, CancellationToken cancellationToken)
+        {
+            var userDetail = _orderDetailsMongoRepository.GetOrderDetailByUserId(request.UserId);
+            return Task.FromResult(_mapper.Map<List<OrderDetailsDto>>(userDetail));
+        }
     }
 }

@@ -16,8 +16,6 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ECommerceDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
@@ -25,8 +23,6 @@ namespace Infrastructure
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IOrderDetailsMongoRepository, OrderDetailsMongoRepository>();
             //services.AddScoped<IRepository, Repository>();
-
-
 
             return services;
         }

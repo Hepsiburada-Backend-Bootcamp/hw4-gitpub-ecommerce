@@ -22,7 +22,7 @@ namespace Core.Entities
         [BsonElement("TotalPrice")]
         public int TotalPrice => OrderItems.Sum(x => x.TotalPrice );
         [BsonElement("User")]
-        public User User { get; set; }
+        public UserDetail User { get; set; }
         [BsonElement("OrderDate")]
         public DateTime OrderDate { get; set; }
     }

@@ -32,5 +32,14 @@ namespace API.Controllers
             var result = await Mediator.Send(_mapper.Map<GetOrderByIdQuery>(request));
             return Ok(result);
         }
+        
+        [HttpGet("userId={UserId}")]
+        public async Task<IActionResult> GetOrderByUserId(string UserId)
+        {
+
+            var result = await Mediator.Send(new GetOrderByUserIdQuery(UserId));
+            return Ok(result);
+        }
+        
     }
 }

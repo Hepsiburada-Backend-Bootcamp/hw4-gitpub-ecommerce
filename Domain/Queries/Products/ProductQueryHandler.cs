@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace Domain.Queries.Products
 {
     public class ProductQueryHandler : IRequestHandler<GetProductsQuery, List<ProductDto>>
+                                          ,IRequestHandler<GetProductFromDapperQuery, List<ProductDto>>
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
@@ -26,9 +27,16 @@ namespace Domain.Queries.Products
 
         public Task<List<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var products = _productRepository.GetProductsDapper();
+            var products = _productRepository.GetAll();
 
             return Task.FromResult(_mapper.Map<List<ProductDto>>(products));
+        }
+
+        public Task<List<ProductDto>> Handle(GetProductFromDapperQuery request, CancellationToken cancellationToken)
+        {
+            var products = _productRepository.GetProductsDapper();
+
+            return Task.FromResult(_mapper.Map<List<ProductDto>>(products)); ;
         }
     }
 }

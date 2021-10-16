@@ -12,5 +12,7 @@ namespace Domain.Dtos.Products
         public string Name { get; set; }
         public int Price { get; set; }
         public string Description { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }
