@@ -15,7 +15,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace IntegrationTest
+namespace Test.IntegrationTest
 {
     public class OrderControllerTest : IClassFixture<ECommerceApiFactory>
     {

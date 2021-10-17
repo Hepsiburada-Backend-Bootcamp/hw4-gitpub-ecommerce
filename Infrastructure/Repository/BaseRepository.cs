@@ -9,18 +9,19 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-  public abstract class BaseRepository
-  {
-    private readonly IConfiguration _configuration;
-
-    protected BaseRepository(IConfiguration configuration)
+    public abstract class BaseRepository
     {
-      _configuration = configuration;
-    }
+        private readonly IConfiguration _configuration;
 
-    protected IDbConnection CreateConnection()
-    {
-      return new NpgsqlConnection("UserID=postgres;Password=12345;Server=localhost;Port=5432;Database=ECommerce;Integrated Security=true;Pooling=true;");
+        protected BaseRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        protected IDbConnection CreateConnection()
+        {
+            var connection = _configuration.GetConnectionString("DefaultConnection");
+            return new NpgsqlConnection(connection);
+        }
     }
-  }
 }

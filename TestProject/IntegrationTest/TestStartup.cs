@@ -14,7 +14,7 @@ using System;
 using System.Reflection;
 using Xunit;
 
-namespace IntegrationTest
+namespace Test.IntegrationTest
 {
     public class TestStartup : Startup
     {
@@ -42,7 +42,7 @@ namespace IntegrationTest
             services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddCommandQueryInjectionSetup();
-            //object p = services.AddApplicationModuleTestDb(Configuration);
+
             services.AddDbContext<ECommerceDbContext>(
              options => options.UseInMemoryDatabase("TestDB")
          );
