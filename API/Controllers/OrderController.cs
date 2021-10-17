@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Queries.Orders;
 
 namespace API.Controllers
 {
@@ -24,6 +25,15 @@ namespace API.Controllers
         {
             return Ok(await Mediator.Send(_mapper.Map<CreateOrderCommand>(request)));
         }
+        
+        
+        [HttpPost("CreateDapper/")]
+        public async Task<IActionResult> CreateDapper([FromBody] CreateOrderRequest request)
+        {
+            return Ok(await Mediator.Send(_mapper.Map<CreateOrderDapperCommand>(request)));
+        }
+        
+        
         [HttpGet("{OrderId}")]
         public async Task<IActionResult> Get(string OrderId)
         {
@@ -38,6 +48,16 @@ namespace API.Controllers
         {
 
             var result = await Mediator.Send(new GetOrderByUserIdQuery(UserId));
+            return Ok(result);
+        }
+        
+             
+        
+        [HttpGet]
+        public async Task<IActionResult> GetOrders()
+        {
+
+            var result = await Mediator.Send(new GetOrderQuery());
             return Ok(result);
         }
         

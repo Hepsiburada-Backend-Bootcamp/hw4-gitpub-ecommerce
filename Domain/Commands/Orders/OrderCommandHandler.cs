@@ -11,7 +11,8 @@ using AutoMapper;
 
 namespace Domain.Commands.Orders
 {
-    public class OrderCommandHandler : IRequestHandler<CreateOrderCommand>
+    public class OrderCommandHandler : IRequestHandler<CreateOrderCommand> 
+                                        , IRequestHandler<CreateOrderDapperCommand>
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderItemRepository _orderItemRepository;
@@ -20,7 +21,9 @@ namespace Domain.Commands.Orders
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public OrderCommandHandler(IMapper iMapper, IOrderItemRepository orderItemRepository, IOrderRepository orderRepository, IProductRepository productRepository, IOrderDetailsMongoRepository orderdetailRepository, IUserRepository userRepository)
+        public OrderCommandHandler(IMapper iMapper, IOrderItemRepository orderItemRepository, 
+            IOrderRepository orderRepository, IProductRepository productRepository,
+            IOrderDetailsMongoRepository orderdetailRepository, IUserRepository userRepository)
         {
             _orderItemRepository = orderItemRepository;
             _orderRepository = orderRepository;
@@ -30,7 +33,7 @@ namespace Domain.Commands.Orders
             _mapper = iMapper;
         }
 
-        public Task<Unit> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(CreateOrderDapperCommand request, CancellationToken cancellationToken)
         {
             Order order = new Order(request.UserId);
 
@@ -65,6 +68,44 @@ namespace Domain.Commands.Orders
             orderDetail.OrderDate = DateTime.Now;
             _orderdetailsRepository.AddOrderDetail(orderDetail);
 
+
+            return Unit.Task;
+        }
+
+        public Task<Unit> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        {
+            Order order = new Order(request.UserId);
+
+            OrderDetail orderDetail = new OrderDetail();
+            MongoOrderItem mongoOrderItem;
+            MongoProduct mongoProduct; 
+            List<MongoOrderItem> mongoOrderItemList = new List<MongoOrderItem>();
+
+
+            int totalPrice = 0;
+            _orderRepository.Create(order);
+
+            foreach (var item in request.OrderItems)
+            {
+                mongoProduct = new MongoProduct();
+                mongoOrderItem = new MongoOrderItem();
+                var dbProduct = _productRepository.GetById(item.ProductId);
+                OrderItem orderItem = new OrderItem(item.ProductId, order.Id, dbProduct.Price, item.Quantity);
+                mongoProduct.Name = dbProduct.Name;
+                mongoProduct.Price = dbProduct.Price;
+                mongoOrderItem.Product = mongoProduct;
+                mongoOrderItem.Quantity = item.Quantity;
+                totalPrice = totalPrice + mongoOrderItem.TotalPrice;
+                mongoOrderItemList.Add(mongoOrderItem);
+
+                _orderItemRepository.Create(orderItem);
+            }
+
+            orderDetail.User = _mapper.Map<UserDetail>(_userRepository.GetById(request.UserId));
+            orderDetail.OrderItems = mongoOrderItemList;
+            orderDetail.OrderId = order.Id.ToString();
+            orderDetail.OrderDate = DateTime.Now;
+            _orderdetailsRepository.AddOrderDetail(orderDetail);
 
             return Unit.Task;
         }

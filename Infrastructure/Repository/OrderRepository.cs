@@ -52,5 +52,10 @@ namespace Infrastructure.Repository
                 throw new Exception(ex.Message, ex);
             }
         }
+
+        public List<Order> GetOrdersWithOrderItems()
+        {
+            return _dbSet.Include(x => x.OrderItems).ToList();
+        }
     }
 }

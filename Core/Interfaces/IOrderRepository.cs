@@ -10,6 +10,7 @@ namespace Core.Interfaces
     public interface IOrderRepository : IRepository<Order>
     {
         void CreateDapper(Order order);
+        List<Order> GetOrdersWithOrderItems();
 
     }
 }

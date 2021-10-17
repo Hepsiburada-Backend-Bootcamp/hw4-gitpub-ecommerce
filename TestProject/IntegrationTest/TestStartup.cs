@@ -14,7 +14,7 @@ using System;
 using System.Reflection;
 using Xunit;
 
-namespace Test.IntegrationTest
+namespace TestProject.IntegrationTest
 {
     public class TestStartup : Startup
     {
@@ -31,12 +31,10 @@ namespace Test.IntegrationTest
             Seed(context);
 
             base.Configure(app, env);
-
         }
 
         public override void ConfigureServices(IServiceCollection services)
         {
-
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddApplication();
@@ -44,8 +42,8 @@ namespace Test.IntegrationTest
             services.AddCommandQueryInjectionSetup();
 
             services.AddDbContext<ECommerceDbContext>(
-             options => options.UseInMemoryDatabase("TestDB")
-         );
+                options => options.UseInMemoryDatabase("TestDB")
+            );
             services.AddControllers().AddApplicationPart(typeof(Startup).Assembly);
         }
 
@@ -57,7 +55,7 @@ namespace Test.IntegrationTest
 
                 context.Users.Add(user);
 
-                Product product = new Product( $"{i}. ürün", i * 2 + 10, null);
+                Product product = new Product($"{i}. ürün", i * 2 + 10, null);
 
                 context.Products.Add(product);
 

@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Dtos.Orders;
+using Domain.Queries.Orders;
 
 namespace Application
 {
@@ -24,6 +26,7 @@ namespace Application
             #region Commands
 
             services.AddScoped<IRequestHandler<CreateOrderCommand, MediatR.Unit>, OrderCommandHandler>();
+            services.AddScoped<IRequestHandler<CreateOrderDapperCommand, MediatR.Unit>, OrderCommandHandler>();
             services.AddScoped<IRequestHandler<CreateProductCommand, MediatR.Unit>, ProductCommandHandler>();
             services.AddScoped<IRequestHandler<CreateProductDapperCommand, MediatR.Unit>, ProductCommandHandler>();
             services.AddScoped<IRequestHandler<CreateUserCommand, MediatR.Unit>, UserCommandHandler>();
@@ -39,6 +42,7 @@ namespace Application
             services.AddScoped<IRequestHandler<GetUsersQuery, List<UserDto>>, UserQueryHandler>();
             services.AddScoped<IRequestHandler<GetOrderByIdQuery, OrderDetailsDto> , OrderDetailsQueryHandler>();
             services.AddScoped<IRequestHandler<GetOrderByUserIdQuery, List<OrderDetailsDto>> , OrderDetailsQueryHandler>();
+            services.AddScoped<IRequestHandler<GetOrderQuery, List<OrderDto>> , OrderQueryHandler>();
 
             #endregion
         }

@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Dtos.OrderItems;
+using Domain.Dtos.Orders;
 
 namespace Application.MappingProfiles
 {
@@ -27,29 +29,37 @@ namespace Application.MappingProfiles
             CreateMap<User, UserDto>();
             CreateMap<UserDetail,UserDto>();
             CreateMap<Product, ProductDto>();
+            
             CreateMap<User, UserDetail>()
                 .ForMember(dest => dest.Id, opt =>
                     opt.MapFrom(src => src.Id.ToString()));
+            
             CreateMap<OrderDetail, OrderDetailsDto>();
+            CreateMap<OrderItem, OrderItemDto>();
+          
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.TotalPrice, opt =>
+                    opt.MapFrom(src => src.OrderItems.Sum(x=>x.Price * x.Quantity)));;
 
             #endregion
 
             #region RequestToDomain
 
             CreateMap<CreateOrderRequest, CreateOrderCommand>();
+            CreateMap<CreateOrderRequest, CreateOrderDapperCommand>();
             CreateMap<CreateProductRequest, CreateProductCommand>();
             CreateMap<CreateProductRequest, CreateProductDapperCommand>();
             CreateMap<CreateUserRequest, CreateUserCommand>();
             CreateMap<GetOrderByIdRequest, GetOrderByIdQuery>();
 
             CreateMap<CreateUserRequest, CreateUserDapperCommand>();
-
-
             #endregion
 
+            #region Mongo
 
-
-
+            CreateMap<ProductDto, MongoProduct>();
+            CreateMap<OrderItemDto, MongoOrderItem>();
+            #endregion
         }
     }
 }

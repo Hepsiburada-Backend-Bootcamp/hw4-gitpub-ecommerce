@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.IntegrationTest
+namespace TestProject.IntegrationTest
 {
     public class ECommerceApiFactory : WebApplicationFactory<TestStartup>
     {
