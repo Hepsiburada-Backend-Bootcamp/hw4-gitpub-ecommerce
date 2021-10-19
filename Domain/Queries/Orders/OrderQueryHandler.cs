@@ -10,22 +10,22 @@ using MediatR;
 
 namespace Domain.Queries.Orders
 {
-    public class OrderQueryHandler : IRequestHandler<GetOrderQuery, List<OrderDto>>
+  public class OrderQueryHandler : IRequestHandler<GetOrdersQuery, List<OrderDto>>
+  {
+    private readonly IOrderRepository _orderRepository;
+    private readonly IMapper _mapper;
+
+    public OrderQueryHandler(IOrderRepository orderRepository, IMapper mapper)
     {
-        private readonly IOrderRepository _orderRepository;
-        private readonly IMapper _mapper;
-
-
-        public OrderQueryHandler(IOrderRepository orderRepository, IMapper mapper)
-        {
-            _orderRepository = orderRepository;
-            _mapper = mapper;
-        }
-
-        public Task<List<OrderDto>> Handle(GetOrderQuery request, CancellationToken cancellationToken)
-        {
-            var orders = _orderRepository.GetOrdersWithOrderItems();
-
-            return Task.FromResult(_mapper.Map<List<OrderDto>>(orders));        }
+      _orderRepository = orderRepository;
+      _mapper = mapper;
     }
+
+    public Task<List<OrderDto>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
+    {
+      var orders = _orderRepository.GetOrdersWithOrderItems();
+
+      return Task.FromResult(_mapper.Map<List<OrderDto>>(orders));
+    }
+  }
 }

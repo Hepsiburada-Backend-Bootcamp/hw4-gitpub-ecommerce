@@ -46,13 +46,10 @@ namespace Application.MappingProfiles
             #region RequestToDomain
 
             CreateMap<CreateOrderRequest, CreateOrderCommand>();
-            CreateMap<CreateOrderRequest, CreateOrderDapperCommand>();
             CreateMap<CreateProductRequest, CreateProductCommand>();
-            CreateMap<CreateProductRequest, CreateProductDapperCommand>();
             CreateMap<CreateUserRequest, CreateUserCommand>();
             CreateMap<GetOrderByIdRequest, GetOrderByIdQuery>();
 
-            CreateMap<CreateUserRequest, CreateUserDapperCommand>();
             #endregion
 
             #region Mongo

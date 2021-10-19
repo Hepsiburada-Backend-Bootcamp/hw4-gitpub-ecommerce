@@ -19,32 +19,28 @@ using Domain.Queries.Orders;
 
 namespace Application
 {
-    public static class CommandQueryInjector
+  public static class CommandQueryInjector
+  {
+    public static void AddCommandQueryInjection(this IServiceCollection services)
     {
-        public static void AddCommandQueryInjection(this IServiceCollection services)
-        {
-            #region Commands
+      #region Commands
 
-            services.AddScoped<IRequestHandler<CreateOrderCommand, MediatR.Unit>, OrderCommandHandler>();
-            services.AddScoped<IRequestHandler<CreateOrderDapperCommand, MediatR.Unit>, OrderCommandHandler>();
-            services.AddScoped<IRequestHandler<CreateProductCommand, MediatR.Unit>, ProductCommandHandler>();
-            services.AddScoped<IRequestHandler<CreateProductDapperCommand, MediatR.Unit>, ProductCommandHandler>();
-            services.AddScoped<IRequestHandler<CreateUserCommand, MediatR.Unit>, UserCommandHandler>();
-            services.AddScoped<IRequestHandler<CreateUserDapperCommand, MediatR.Unit>, UserCommandHandler>();
+      services.AddScoped<IRequestHandler<CreateOrderCommand, MediatR.Unit>, OrderCommandHandler>();
+      services.AddScoped<IRequestHandler<CreateProductCommand, MediatR.Unit>, ProductCommandHandler>();
+      services.AddScoped<IRequestHandler<CreateUserCommand, MediatR.Unit>, UserCommandHandler>();
 
 
-            #endregion
+      #endregion
 
-            #region Queries
+      #region Queries
 
-            services.AddScoped<IRequestHandler<GetProductsQuery, List<ProductDto>>, ProductQueryHandler>();
-            services.AddScoped<IRequestHandler<GetProductFromDapperQuery, List<ProductDto>>, ProductQueryHandler>();
-            services.AddScoped<IRequestHandler<GetUsersQuery, List<UserDto>>, UserQueryHandler>();
-            services.AddScoped<IRequestHandler<GetOrderByIdQuery, OrderDetailsDto> , OrderDetailsQueryHandler>();
-            services.AddScoped<IRequestHandler<GetOrderByUserIdQuery, List<OrderDetailsDto>> , OrderDetailsQueryHandler>();
-            services.AddScoped<IRequestHandler<GetOrderQuery, List<OrderDto>> , OrderQueryHandler>();
+      services.AddScoped<IRequestHandler<GetProductsQuery, List<ProductDto>>, ProductQueryHandler>();
+      services.AddScoped<IRequestHandler<GetUsersQuery, List<UserDto>>, UserQueryHandler>();
+      services.AddScoped<IRequestHandler<GetOrderByIdQuery, OrderDetailsDto>, OrderDetailsQueryHandler>();
+      services.AddScoped<IRequestHandler<GetOrderByUserIdQuery, List<OrderDetailsDto>>, OrderDetailsQueryHandler>();
+      services.AddScoped<IRequestHandler<GetOrdersQuery, List<OrderDto>>, OrderQueryHandler>();
 
-            #endregion
-        }
+      #endregion
     }
+  }
 }

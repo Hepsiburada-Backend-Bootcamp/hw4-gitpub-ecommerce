@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace API.Configurations
 {
-    public static class CommandQueryInjectionSetup
+  public static class CommandQueryInjectionSetup
+  {
+    public static void AddCommandQueryInjectionSetup(this IServiceCollection services)
     {
-        public static void AddCommandQueryInjectionSetup(this IServiceCollection services)
-        {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+      if(services == null)
+        throw new ArgumentNullException(nameof(services));
 
-            CommandQueryInjector.AddCommandQueryInjection(services);
+      CommandQueryInjector.AddCommandQueryInjection(services);
 
-        }
     }
+  }
 }

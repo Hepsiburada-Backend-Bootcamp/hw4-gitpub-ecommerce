@@ -10,32 +10,21 @@ using System.Threading.Tasks;
 
 namespace Domain.Commands.Users
 {
-    public class UserCommandHandler : IRequestHandler<CreateUserCommand>, 
-                                         IRequestHandler<CreateUserDapperCommand>
+  public class UserCommandHandler : IRequestHandler<CreateUserCommand>
+  {
+    private readonly IUserRepository _userRepository;
+
+    public UserCommandHandler(IUserRepository userRepository)
     {
-        private readonly IUserRepository _userRepository;
-
-        public UserCommandHandler(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
-
-        public Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
-        {
-            User user = new User(request.Name, request.LastName, request.Email);
-            _userRepository.Create(user);
-
-            return Unit.Task;
-        }
-
-        public Task<Unit> Handle(CreateUserDapperCommand request, CancellationToken cancellationToken)
-        {
-            User user = new User(request.Name, request.LastName, request.Email);
-            _userRepository.CreateDapper(user);
-
-            return Unit.Task;
-        }
-
-
+      _userRepository = userRepository;
     }
+
+    public Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    {
+      User user = new User(request.Name, request.LastName, request.Email);
+      _userRepository.CreateDapper(user);
+
+      return Unit.Task;
+    }
+  }
 }

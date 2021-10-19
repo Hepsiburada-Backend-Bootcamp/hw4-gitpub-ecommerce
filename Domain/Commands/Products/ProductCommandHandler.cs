@@ -10,33 +10,22 @@ using MediatR;
 
 namespace Domain.Commands.Products
 {
-    public class ProductCommandHandler : IRequestHandler<CreateProductCommand>
-                                            ,IRequestHandler<CreateProductDapperCommand>
+  public class ProductCommandHandler : IRequestHandler<CreateProductCommand>
+  {
+    private readonly IProductRepository _productRepository;
+
+    public ProductCommandHandler(IProductRepository productRepository)
     {
-        private readonly IProductRepository _productRepository;
-
-        public ProductCommandHandler(IProductRepository productRepository)
-        {
-            _productRepository = productRepository;
-        }
-
-        public Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
-        {
-            Product product = new Product(request.Name, request.Price, request.Description);
-
-            _productRepository.Create(product);
-
-            return Unit.Task;
-        }
-
-
-        public Task<Unit> Handle(CreateProductDapperCommand request, CancellationToken cancellationToken)
-        {
-            Product product = new Product(request.Name, request.Price, request.Description);
-
-            _productRepository.CreateDapper(product);
-
-            return Unit.Task;
-        }
+      _productRepository = productRepository;
     }
+
+    public Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    {
+      Product product = new Product(request.Name, request.Price, request.Description);
+
+      _productRepository.CreateDapper(product);
+
+      return Unit.Task;
+    }
+  }
 }

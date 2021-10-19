@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IProductRepository : IRepository<Product>
-    {
-        void CreateDapper(Product product);
-        List<Product> GetProductsDapper();
-        Product GetById(Guid productId);
-    }
+  public interface IProductRepository : IRepository<Product>
+  {
+    void CreateDapper(Product product);
+    List<Product> GetAllDapper();
+    Product GetById(Guid productId);
+  }
 }

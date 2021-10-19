@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Domain.Queries.Orders
 {
-    public class GetOrderQuery : IRequest<List<OrderDto>>
+    public class GetOrdersQuery : IRequest<List<OrderDto>>
     {
         
     }

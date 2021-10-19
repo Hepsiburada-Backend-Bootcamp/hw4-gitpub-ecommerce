@@ -14,30 +14,24 @@ using Domain.Queries.OrderDetails;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ApiControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  public class UserController : ApiControllerBase
+  {
+    public UserController(IMapper mapper) : base(mapper)
     {
-        public UserController(IMapper mapper) : base(mapper)
-        {
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<List<UserDto>>> GetAll()
-        {
-            return Ok(await Mediator.Send(new GetUsersQuery()));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
-        {
-            return Ok(await Mediator.Send(_mapper.Map<CreateUserCommand>(request)));
-        }
-
-        [HttpPost("CreateUserDapper")]
-        public async Task<IActionResult> CreateDapper([FromBody] CreateUserRequest request)
-        {
-            return Ok(await Mediator.Send(_mapper.Map<CreateUserDapperCommand>(request)));
-        }
     }
+
+    [HttpGet]
+    public async Task<ActionResult<List<UserDto>>> GetAll()
+    {
+      return Ok(await Mediator.Send(new GetUsersQuery()));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
+    {
+      return Ok(await Mediator.Send(_mapper.Map<CreateUserCommand>(request)));
+    }
+  }
 }

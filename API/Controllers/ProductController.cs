@@ -12,37 +12,24 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductController : ApiControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  public class ProductController : ApiControllerBase
+  {
+    public ProductController(IMapper mapper) : base(mapper)
     {
-        public ProductController(IMapper mapper) : base(mapper)
-        {
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateProductRequest request)
-        {
-            return Ok(await Mediator.Send(_mapper.Map<CreateProductCommand>(request)));
-        }
-
-        [HttpPost("CrateDapper")]
-        public async Task<IActionResult> CreateDapper([FromBody] CreateProductRequest request)
-        {
-            return Ok(await Mediator.Send(_mapper.Map<CreateProductDapperCommand>(request)));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            return Ok(await Mediator.Send(new GetProductsQuery()));
-        }
-
-
-        [HttpGet("FromDapperQuery")]
-        public async Task<IActionResult> GetAllDapper()
-        {
-            return Ok(await Mediator.Send(new GetProductFromDapperQuery()));
-        }
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
+    {
+      return Ok(await Mediator.Send(_mapper.Map<CreateProductCommand>(request)));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+      return Ok(await Mediator.Send(new GetProductsQuery()));
+    }
+  }
 }

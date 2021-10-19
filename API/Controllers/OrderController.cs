@@ -12,54 +12,43 @@ using Domain.Queries.Orders;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class OrderController : ApiControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  public class OrderController : ApiControllerBase
+  {
+    public OrderController(IMapper mapper) : base(mapper)
     {
-        public OrderController(IMapper mapper) : base(mapper)
-        {
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateOrderRequest request)
-        {
-            return Ok(await Mediator.Send(_mapper.Map<CreateOrderCommand>(request)));
-        }
-        
-        
-        [HttpPost("CreateDapper/")]
-        public async Task<IActionResult> CreateDapper([FromBody] CreateOrderRequest request)
-        {
-            return Ok(await Mediator.Send(_mapper.Map<CreateOrderDapperCommand>(request)));
-        }
-        
-        
-        [HttpGet("{OrderId}")]
-        public async Task<IActionResult> Get(string OrderId)
-        {
-            GetOrderByIdRequest request = new GetOrderByIdRequest();
-            request.OrderId = OrderId;
-            var result = await Mediator.Send(_mapper.Map<GetOrderByIdQuery>(request));
-            return Ok(result);
-        }
-        
-        [HttpGet("userId={UserId}")]
-        public async Task<IActionResult> GetOrderByUserId(string UserId)
-        {
-
-            var result = await Mediator.Send(new GetOrderByUserIdQuery(UserId));
-            return Ok(result);
-        }
-        
-             
-        
-        [HttpGet]
-        public async Task<IActionResult> GetOrders()
-        {
-
-            var result = await Mediator.Send(new GetOrderQuery());
-            return Ok(result);
-        }
-        
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateOrderRequest request)
+    {
+      return Ok(await Mediator.Send(_mapper.Map<CreateOrderCommand>(request)));
+    }
+
+    [HttpGet("{OrderId}")]
+    public async Task<IActionResult> Get(string OrderId)
+    {
+      GetOrderByIdRequest request = new GetOrderByIdRequest();
+      request.OrderId = OrderId;
+      var result = await Mediator.Send(_mapper.Map<GetOrderByIdQuery>(request));
+      return Ok(result);
+    }
+
+    [HttpGet("userId={UserId}")]
+    public async Task<IActionResult> GetOrderByUserId(string UserId)
+    {
+
+      var result = await Mediator.Send(new GetOrderByUserIdQuery(UserId));
+      return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetOrders()
+    {
+      var result = await Mediator.Send(new GetOrdersQuery());
+      return Ok(result);
+    }
+
+  }
 }

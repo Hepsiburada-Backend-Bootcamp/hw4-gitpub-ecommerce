@@ -12,31 +12,23 @@ using System.Threading.Tasks;
 
 namespace Domain.Queries.Products
 {
-    public class ProductQueryHandler : IRequestHandler<GetProductsQuery, List<ProductDto>>
-                                          ,IRequestHandler<GetProductFromDapperQuery, List<ProductDto>>
+  public class ProductQueryHandler : IRequestHandler<GetProductsQuery, List<ProductDto>>
+  {
+    private readonly IProductRepository _productRepository;
+    private readonly IMapper _mapper;
+
+
+    public ProductQueryHandler(IProductRepository productRepository, IMapper mapper)
     {
-        private readonly IProductRepository _productRepository;
-        private readonly IMapper _mapper;
-
-
-        public ProductQueryHandler(IProductRepository productRepository, IMapper mapper)
-        {
-            _productRepository = productRepository;
-            _mapper = mapper;
-        }
-
-        public Task<List<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
-        {
-            var products = _productRepository.GetAll();
-
-            return Task.FromResult(_mapper.Map<List<ProductDto>>(products));
-        }
-
-        public Task<List<ProductDto>> Handle(GetProductFromDapperQuery request, CancellationToken cancellationToken)
-        {
-            var products = _productRepository.GetProductsDapper();
-
-            return Task.FromResult(_mapper.Map<List<ProductDto>>(products)); ;
-        }
+      _productRepository = productRepository;
+      _mapper = mapper;
     }
+
+    public Task<List<ProductDto>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    {
+      var products = _productRepository.GetAllDapper();
+
+      return Task.FromResult(_mapper.Map<List<ProductDto>>(products));
+    }
+  }
 }
